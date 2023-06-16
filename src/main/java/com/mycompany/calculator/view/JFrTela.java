@@ -16,6 +16,7 @@ public class JFrTela extends javax.swing.JFrame {
 
     private final CalcController calcController;
     private EnumOperation ultOperation;
+    private Double totalJF;
     
     /**
      * Creates new form JFrTela
@@ -23,6 +24,7 @@ public class JFrTela extends javax.swing.JFrame {
     public JFrTela() {
         initComponents();
         calcController = new CalcController();       
+        totalJF = 0.0;
     }
 
     /**
@@ -295,9 +297,18 @@ public class JFrTela extends javax.swing.JFrame {
     }//GEN-LAST:event_btExitActionPerformed
 
     private void btMoreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btMoreActionPerformed
+        
+        
+        
+        //totalJF = stringToDouble(tfValor.getText());
+        //System.out.println(" BT More totalFJ: "+ totalJF);
+        
+        //calcController.realizeOperation(EnumOperation.SUM, totalJF);
         calcController.realizeOperation(EnumOperation.SUM, stringToDouble(tfValor.getText()));
         ultOperation = EnumOperation.SUM;
         clean();
+        
+        System.out.println(" ------------ BT MAIS totalFJ: "+ calcController.getTotal());
         //tfValor.setText(doubleToString(calcController.getTotal()));
     }//GEN-LAST:event_btMoreActionPerformed
 
@@ -305,6 +316,8 @@ public class JFrTela extends javax.swing.JFrame {
         calcController.realizeOperation(EnumOperation.SUBTRACTION, stringToDouble(tfValor.getText()));
         ultOperation = EnumOperation.SUBTRACTION;
         clean();
+        
+        System.out.println(" ------------ BT MENOS totalFJ: "+ calcController.getTotal());
         //tfValor.setText(doubleToString(calcController.getTotal()));
     }//GEN-LAST:event_btLessActionPerformed
 
@@ -312,6 +325,8 @@ public class JFrTela extends javax.swing.JFrame {
         calcController.realizeOperation(EnumOperation.MULTIPLICATION, stringToDouble(tfValor.getText()));
         ultOperation = EnumOperation.MULTIPLICATION;
         clean();
+        
+        System.out.println(" ------------ BT MULTIPLICA totalFJ: "+ calcController.getTotal());
         //tfValor.setText(doubleToString(calcController.getTotal()));
     }//GEN-LAST:event_btMultiplicationActionPerformed
 
@@ -319,6 +334,8 @@ public class JFrTela extends javax.swing.JFrame {
         calcController.realizeOperation(EnumOperation.DIVISION, stringToDouble(tfValor.getText()));
         ultOperation = EnumOperation.DIVISION;
         clean();
+        
+        System.out.println(" ------------ BT DIVIDE totalFJ: "+ calcController.getTotal());
         //tfValor.setText(doubleToString(calcController.getTotal()));
     }//GEN-LAST:event_btDivisionActionPerformed
 
@@ -326,6 +343,17 @@ public class JFrTela extends javax.swing.JFrame {
         calcController.realizeOperation(ultOperation, stringToDouble(tfValor.getText()));
         tfValor.setText(doubleToString(calcController.getTotal()));
         
+        //Corresão de bug
+        //Reset para poder efetuar calcular entre operações 
+        // 10 + 10 = 20
+        // - 5 = 15
+        // + 10 = 25
+        //
+        //porem se trocar de operador sem usar o igual o mesmo perde a referencia de total
+        // 10 + 10 - 5 = ERRO
+        calcController.reset();
+        
+        System.out.println(" ------------ BT IQUAL totalFJ: "+ calcController.getTotal());
         //System.out.println("-----------–---------------------------------------- brEquals");
         //System.out.println("total:" + calcController.getTotal());
         

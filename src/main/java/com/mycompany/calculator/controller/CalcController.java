@@ -15,10 +15,10 @@ public class CalcController {
     }
     
     public Double realizeOperation(EnumOperation operation, Double value){
-        System.out.println("----- realizeOperation ");
-        System.out.println("Operation: " + operation);
-        System.out.println("Value: " + value);
-        System.out.println("Total: "+ this.total);
+//        System.out.println("----------------------> realizeOperation METODO");
+//        System.out.println("Operation: " + operation);
+//        System.out.println("Value: " + value);
+//        System.out.println("Total: "+ this.total);
         
         switch (operation) {
             case SUM:
@@ -48,6 +48,11 @@ public class CalcController {
             default:
                 break;
         }
+        
+        System.out.println("----------------------> realizeOperation METODO");
+        System.out.println("Operation: " + operation);
+        System.out.println("Value: " + value);
+        System.out.println("Total: "+ this.total);
         
         return this.total;
         
