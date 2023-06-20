@@ -16,15 +16,13 @@ public class JFrTela extends javax.swing.JFrame {
 
     private final CalcController calcController;
     private EnumOperation ultOperation;
-    private Double totalJF;
     
     /**
      * Creates new form JFrTela
      */
     public JFrTela() {
         initComponents();
-        calcController = new CalcController();       
-        totalJF = 0.0;
+        calcController = new CalcController();
     }
 
     /**
@@ -298,64 +296,41 @@ public class JFrTela extends javax.swing.JFrame {
 
     private void btMoreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btMoreActionPerformed
         
-        
-        
-        //totalJF = stringToDouble(tfValor.getText());
-        //System.out.println(" BT More totalFJ: "+ totalJF);
-        
-        //calcController.realizeOperation(EnumOperation.SUM, totalJF);
         calcController.realizeOperation(EnumOperation.SUM, stringToDouble(tfValor.getText()));
         ultOperation = EnumOperation.SUM;
-        clean();
+        tfValor.setText(doubleToString(calcController.getTotal()));
         
-        System.out.println(" ------------ BT MAIS totalFJ: "+ calcController.getTotal());
-        //tfValor.setText(doubleToString(calcController.getTotal()));
     }//GEN-LAST:event_btMoreActionPerformed
 
     private void btLessActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btLessActionPerformed
+        
         calcController.realizeOperation(EnumOperation.SUBTRACTION, stringToDouble(tfValor.getText()));
         ultOperation = EnumOperation.SUBTRACTION;
-        clean();
+        tfValor.setText(doubleToString(calcController.getTotal()));
         
-        System.out.println(" ------------ BT MENOS totalFJ: "+ calcController.getTotal());
-        //tfValor.setText(doubleToString(calcController.getTotal()));
     }//GEN-LAST:event_btLessActionPerformed
 
     private void btMultiplicationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btMultiplicationActionPerformed
+        
         calcController.realizeOperation(EnumOperation.MULTIPLICATION, stringToDouble(tfValor.getText()));
         ultOperation = EnumOperation.MULTIPLICATION;
-        clean();
+        tfValor.setText(doubleToString(calcController.getTotal()));
         
-        System.out.println(" ------------ BT MULTIPLICA totalFJ: "+ calcController.getTotal());
-        //tfValor.setText(doubleToString(calcController.getTotal()));
     }//GEN-LAST:event_btMultiplicationActionPerformed
 
     private void btDivisionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btDivisionActionPerformed
+        
         calcController.realizeOperation(EnumOperation.DIVISION, stringToDouble(tfValor.getText()));
         ultOperation = EnumOperation.DIVISION;
-        clean();
+        tfValor.setText(doubleToString(calcController.getTotal()));
         
-        System.out.println(" ------------ BT DIVIDE totalFJ: "+ calcController.getTotal());
-        //tfValor.setText(doubleToString(calcController.getTotal()));
     }//GEN-LAST:event_btDivisionActionPerformed
 
     private void btEqualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btEqualActionPerformed
+        
         calcController.realizeOperation(ultOperation, stringToDouble(tfValor.getText()));
         tfValor.setText(doubleToString(calcController.getTotal()));
-        
-        //Corresão de bug
-        //Reset para poder efetuar calcular entre operações 
-        // 10 + 10 = 20
-        // - 5 = 15
-        // + 10 = 25
-        //
-        //porem se trocar de operador sem usar o igual o mesmo perde a referencia de total
-        // 10 + 10 - 5 = ERRO
         calcController.reset();
-        
-        System.out.println(" ------------ BT IQUAL totalFJ: "+ calcController.getTotal());
-        //System.out.println("-----------–---------------------------------------- brEquals");
-        //System.out.println("total:" + calcController.getTotal());
         
     }//GEN-LAST:event_btEqualActionPerformed
 
@@ -364,6 +339,7 @@ public class JFrTela extends javax.swing.JFrame {
     }//GEN-LAST:event_tfValorActionPerformed
     
     private String doubleToString(Double number) {
+        
         if (number != null){
             
             DecimalFormat forma = new DecimalFormat("##,###,###,##0.00", 
@@ -373,6 +349,7 @@ public class JFrTela extends javax.swing.JFrame {
             return forma.format(number);
         }
         return "";
+        
     }
     
     private Double stringToDouble(String number) {
@@ -380,55 +357,40 @@ public class JFrTela extends javax.swing.JFrame {
         String [] aux;
         if (number.contains(",")){
             aux = number.split(",");
-            //testes / funcionando / tira o número até a virgula
-            //System.out.println(" ******************* Contem virgula");
-            //System.out.println(" Sem virgula: " + aux[0]);
-            //Na primeira posicao do vetor pega a string/numero até a virgula
             number = aux[0];
         }
         
-        
-        //System.out.println("String to Double ------------------------> ");
-        //System.out.println("Number String:  "+ number);
         NumberFormat nf = NumberFormat.getInstance();
         Double dv = 0.0;
-        //System.out.println("Double dv " + dv);
+        
         try {
             dv = nf.parse(number).doubleValue();
             //System.out.println("Double dv depois do parse" + dv);
         } catch (ParseException ex) { }
-        
-        //System.out.println("String To Double ------------------------>" + dv);
         
         return dv;
     }
         
     private void clean(){
         tfValor.setText("0,00");
+        
     }
     
     private void type(String caractere){
         
-        //System.out.println("------------------------------------------------------------> Type Number");
-        
-        if (tfValor.getText().equals("0,00")) {
+        if (tfValor.getText().equals("0,00") || tfValor.getText().equals(doubleToString(calcController.getTotal()))) {
             //first operation
-            tfValor.setText(caractere);
-            //System.out.println("caractere Type of Fild Operation  Equal 0,00  " + caractere);
-            
+            clean();
+            tfValor.setText(caractere);   
         } else {
             if(caractere.equals(",") && tfValor.getText().contains(",")){
                 //if contains two commes (,) don't do anything
             } else {
                 //concatenet
                 tfValor.setText(tfValor.getText().concat(caractere));
-                
-                //System.out.println("caractere Depois de Concatenado " + caractere);
-                //System.out.println(tfValor.getText());
-                
             }
-            
         }
+        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -7,18 +7,14 @@ import com.mycompany.calculator.enums.EnumOperation;
  * @author jonathan_oliveira
  */
 public class CalcController {
-    
     private Double total;
     
     public CalcController(){
         total = 0.0;
+        
     }
     
     public Double realizeOperation(EnumOperation operation, Double value){
-//        System.out.println("----------------------> realizeOperation METODO");
-//        System.out.println("Operation: " + operation);
-//        System.out.println("Value: " + value);
-//        System.out.println("Total: "+ this.total);
         
         switch (operation) {
             case SUM:
@@ -48,11 +44,6 @@ public class CalcController {
             default:
                 break;
         }
-        
-        System.out.println("----------------------> realizeOperation METODO");
-        System.out.println("Operation: " + operation);
-        System.out.println("Value: " + value);
-        System.out.println("Total: "+ this.total);
         
         return this.total;
         
